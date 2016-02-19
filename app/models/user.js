@@ -27,8 +27,15 @@ var userSchema = mongoose.Schema({
         token        : String,
         email        : String,
         name         : String
-    }
-
+    },
+    creditCard       : [{
+      make           : String,
+      name           : String,
+      number         : String,
+      securityCode   : String,
+      expirationDate : String
+    }]
+    
 });
 
 // methods ======================

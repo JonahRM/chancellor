@@ -60,6 +60,20 @@ module.exports = function(app, passport) {
 		req.logout();
 		res.redirect('/');
 	});
+	
+
+	// =====================================
+	// CREDIT CARD ==============================
+	// =====================================
+	// app.post('/creditCard', function(req, res) {
+	// 	console.log(Object.keys(req.body));
+	// 	console.log('This is the user' + req.user);
+	// 	res.redirect('/');
+	// });
+	// app.get('/creditCard', isLoggedIn, function(req, res) {
+	// 	res.render('creditCard.ejs');
+	// 	console.log('This is the user' + req.user);
+	// });
 };
 
 // route middleware to make sure
