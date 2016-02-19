@@ -1,8 +1,0 @@
-Rules:
-All server side code -> “use strict”;
-Use semi-colons
-All variables -> snake_case
-All functions -> camelCase
-
-Suggestions:
-Use Atom (free text editor)
