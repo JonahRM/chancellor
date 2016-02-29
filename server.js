@@ -1,5 +1,7 @@
 // server.js
 
+// https://scotch.io/tutorials/easy-node-authentication-linking-all-accounts-together
+
 // set up ======================================================================
 // get all the tools we need
 var express  = require('express');
