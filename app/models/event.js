@@ -8,7 +8,7 @@ var eventSchema = mongoose.Schema({
   league: String,
   gametime: Date,
 
-    participants            : {
+    participants    : {
         home        : String,
         away     : String,
     },

@@ -78,12 +78,22 @@ var participants = xpath.select("participants/participant", event)
 		if (xpath.select("periods/period/spread/spread_home", event)[0] != null) {
 		homeSpread = xpath.select("periods/period/spread/spread_home", event)[0].firstChild.data
 		awaySpread = xpath.select("periods/period/spread/spread_visiting", event)[0].firstChild.data
-		console.log(league)
-		console.log(eventTime)
-		console.log(homeTeam)
-		console.log(awayTeam)
-		console.log(homeSpread)
-		console.log(awaySpread)
+
+		var newEvent = new Event();
+
+		newEvent.league = league
+		newEvent.gametime = eventTime
+		newEvent.participants.home = homeTeam
+		newEvent.participants.away = awayTeam
+		newEvent.spread.homeSpread = homeSpread
+		newEvent.spread.awaySpread = awaySpread
+
+		newUser.save(function(err) {
+        if (err)
+            throw err;
+        });
+
+
 	}
 })
 
