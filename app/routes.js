@@ -1,4 +1,7 @@
 // app/routes.js
+var User = require('./models/user.js');
+var Bet = require('./models/bet.js');
+
 module.exports = function(app, passport) {
 
 	// =====================================
@@ -88,6 +91,63 @@ module.exports = function(app, passport) {
 	// 	res.render('creditCard.ejs');
 	// 	console.log('This is the user' + req.user);
 	// });
+
+
+//////////////////////// GREENWALD ROUTES //////////////////////////////////////
+app.get('/currentBets', isLoggedIn, function(req, res) {
+
+	User.findOne({
+	'_id': req.user.id
+	})
+		.populate('currentBets.bet')
+		.exec(function(error, user) {
+			var bets = [];
+			var betIds = [];
+
+			for (var j = 0; j < user.currentBets.length; j++) {
+				var currentBet = user.currentBets[j];
+				betIds.push(currentBet.bet.id);
+			}
+
+			Bet.find({
+				'_id': { $nin: betIds}
+			}, function(err, unseenBets) {
+				// res.json(unseenBets).end();
+				res.render('bets.ejs', { unseenBets : unseenBets });
+			});
+		});
+});
+
+// WHEN A USER ADDS A BET, pass the bet object in as a json
+// if you have the betID that represenents a bet then you can say:
+// curl -H "Content-Type: application/json" -X POST -d '{"betId":"57001f65944baac657bcc109"}' http://localhost:8080/currentBets
+app.post('/currentBets', isLoggedIn, function(req, res) {
+	User.find({}, function(err, users) {
+		// Add the new rating to the database
+			var newBet = {chosenTeam: req.body.chosenTeam, bet: req.body.betId};
+			User.update(
+					{ '_id': req.user.id,
+					'currentBets.bet' : {$ne: req.body.betId}}, //makes sure not to add duplicates
+					{$push: {currentBets: newBet}},
+					function(err, user) {
+						if (!err) {
+							console.log("This is the user " + user);
+							res.sendStatus(200).end();
+						} else {
+							// Internal server error
+							console.log("this is the error " + err);
+							res.sendStatus(500).end();
+						}
+					}
+			);
+	});
+});
+
+
+
+
+
+
 };
 
 // route middleware to make sure

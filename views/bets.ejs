@@ -1,0 +1,30 @@
+<% for (var i = 0; i < unseenBets.length; i++) { %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<div>
+  <h1> Bet: Team One: <%= unseenBets[i].teamOne %>, Team Two: <%= unseenBets[i].teamTwo %> </h1>
+  <button id="<%= unseenBets[i].id %>"><%= unseenBets[i].teamOne %></button>
+  <button id="<%= unseenBets[i].id %>"><%= unseenBets[i].teamTwo %></button>
+</div>
+<% } %>
+<script>
+$('document').ready(function() {
+  $('button').on('click', function() {
+    var data = {
+      betId : this.id,
+      chosenTeam : $(this).text()
+    }
+    var baseURL = 'http://localhost:8080/currentBets';
+    $.ajax({
+      type: 'POST',
+      url: baseURL,
+      data: data,
+      error: function(e) {
+        alert('This is the error ' + error);
+      },
+      success: function(response) {
+        alert('This is the response ' + response);
+      }
+    });
+  });
+});
+</script>
