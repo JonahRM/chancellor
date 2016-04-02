@@ -7,7 +7,7 @@ module.exports = function(app, passport) {
 	// =====================================
 	// HOME PAGE (with login links) ========
 	// =====================================
-	app.get('/', function(req, res) {
+	app.get('/api/', function(req, res) {
 		res.render('index.ejs'); // load the index.ejs file
 	});
 
@@ -15,16 +15,16 @@ module.exports = function(app, passport) {
 	// LOGIN ===============================
 	// =====================================
 	// show the login form
-	app.get('/login', function(req, res) {
+	app.get('/api/login', function(req, res) {
 
 		// render the page and pass in any flash data if it exists
 		res.render('login.ejs', { message: req.flash('loginMessage') });
 	});
 
 	// process the login form
-	app.post('/login', passport.authenticate('local-login', {
-		successRedirect : '/profile', // redirect to the secure profile section
-		failureRedirect : '/login', // redirect back to the signup page if there is an error
+	app.post('/api/login', passport.authenticate('local-login', {
+		successRedirect : '/api/profile', // redirect to the secure profile section
+		failureRedirect : '/api/login', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 	}));
 
@@ -32,16 +32,16 @@ module.exports = function(app, passport) {
 	// SIGNUP ==============================
 	// =====================================
 	// show the signup form
-	app.get('/signup', function(req, res) {
+	app.get('/api/signup', function(req, res) {
 
 		// render the page and pass in any flash data if it exists
 		res.render('signup.ejs', { message: req.flash('signupMessage') });
 	});
 
 	// process the signup form
-	app.post('/signup', passport.authenticate('local-signup', {
-		successRedirect : '/profile', // redirect to the secure profile section
-		failureRedirect : '/signup', // redirect back to the signup page if there is an error
+	app.post('/api/signup', passport.authenticate('local-signup', {
+		successRedirect : '/api/profile', // redirect to the secure profile section
+		failureRedirect : '/api/signup', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 	}));
 
@@ -50,7 +50,7 @@ module.exports = function(app, passport) {
 	// =====================================
 	// we will want this protected so you have to be logged in to visit
 	// we will use route middleware to verify this (the isLoggedIn function)
-	app.get('/profile', isLoggedIn, function(req, res) {
+	app.get('/api/profile', isLoggedIn, function(req, res) {
 		res.render('profile.ejs', {
 			user : req.user // get the user out of session and pass to template
 		});
@@ -60,41 +60,41 @@ module.exports = function(app, passport) {
   // FACEBOOK ROUTES =====================
   // =====================================
   // route for facebook authentication and login
-  app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+  app.get('/api/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
 
   // handle the callback after facebook has authenticated the user
-  app.get('/auth/facebook/callback',
+  app.get('/api/auth/facebook/callback',
       passport.authenticate('facebook', {
-          successRedirect : '/profile',
-          failureRedirect : '/'
+          successRedirect : '/api/profile',
+          failureRedirect : '/api/'
       }));
 
 
 	// =====================================
 	// LOGOUT ==============================
 	// =====================================
-	app.get('/logout', function(req, res) {
+	app.get('/api/logout', function(req, res) {
 		req.logout();
-		res.redirect('/');
+		res.redirect('/api/');
 	});
 
 
 	// =====================================
 	// CREDIT CARD ==============================
 	// =====================================
-	// app.post('/creditCard', function(req, res) {
+	// app.post('/api/creditCard', function(req, res) {
 	// 	console.log(Object.keys(req.body));
 	// 	console.log('This is the user' + req.user);
 	// 	res.redirect('/');
 	// });
-	// app.get('/creditCard', isLoggedIn, function(req, res) {
+	// app.get('/api/creditCard', isLoggedIn, function(req, res) {
 	// 	res.render('creditCard.ejs');
 	// 	console.log('This is the user' + req.user);
 	// });
 
 
 //////////////////////// GREENWALD ROUTES //////////////////////////////////////
-app.get('/currentBets', isLoggedIn, function(req, res) {
+app.get('/api/currentBets', isLoggedIn, function(req, res) {
 
 	User.findOne({
 	'_id': req.user.id
@@ -112,8 +112,8 @@ app.get('/currentBets', isLoggedIn, function(req, res) {
 			Bet.find({
 				'_id': { $nin: betIds}
 			}, function(err, unseenBets) {
-				// res.json(unseenBets).end();
-				res.render('bets.ejs', { unseenBets : unseenBets });
+				res.json(unseenBets).end();
+				// res.render('bets.ejs', { unseenBets : unseenBets });
 			});
 		});
 });
@@ -121,7 +121,7 @@ app.get('/currentBets', isLoggedIn, function(req, res) {
 // WHEN A USER ADDS A BET, pass the bet object in as a json
 // if you have the betID that represenents a bet then you can say:
 // curl -H "Content-Type: application/json" -X POST -d '{"betId":"57001f65944baac657bcc109"}' http://localhost:8080/currentBets
-app.post('/currentBets', isLoggedIn, function(req, res) {
+app.post('/api/currentBets', isLoggedIn, function(req, res) {
 	User.find({}, function(err, users) {
 		// Add the new rating to the database
 			var newBet = {chosenTeam: req.body.chosenTeam, bet: req.body.betId};
@@ -159,5 +159,5 @@ function isLoggedIn(req, res, next) {
 		return next();
 
 	// if they aren't redirect them to the home page
-	res.redirect('/');
+	res.redirect('/api/');
 }
