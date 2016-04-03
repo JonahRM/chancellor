@@ -34,19 +34,42 @@ var BugAdd = require('./BugAdd');
 var CardListContainer = require('./CardListContainer');
 
 
-
-
 var Profile = React.createClass({
   getInitialState: function() {
-    return {cards: []};
+    return {profile:[]}
+  },
+  componentDidMount: function() {
+    $.ajax('/api/profileJSON').done(function(data) {
+      this.setState({profile: data});
+    }.bind(this));
   },
   render: function() {
+    console.log("Yo", this.state);
+
+    if(this.state.profile.user === undefined) {
+      return <div> Logging in ...</div>
+      console.log("Yo", this.state.profile.user);
+        console.log("Yo", this.state.profile.user.facebook.name);
+    }
+    else {
+
     return (
     <div>
-    <p> My Profile</p>
-    <CardListContainer />
+    <p> My Profile Yo</p>
+     <Card>
+        <CardHeader
+          title={this.state.profile.user.facebook.name}
+
+        />
+        <Avatar src={this.state.profile.user.facebook.profilePictureURL} />
+        <CardText>
+          This ends tomorrow!
+        </CardText>
+      </Card>
     </div>
-    )
+  );
+  }
+
   }
 });
 

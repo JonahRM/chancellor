@@ -27,7 +27,7 @@ var NoMatch = React.createClass({
 
 var App = React.createClass({
   getInitialState: function() {
-    return {cards: [],page:"/#/currentBets"};
+    return {cards: [],page:"/#/marketplace"};
 
 
 
