@@ -72,18 +72,9 @@ var Marketplace2 = React.createClass({
   render: function() {
     return (
     <div>
-    <div >
-    <LeftNav width= {140}>
-      <MenuItem linkButton={true} href="/#/home"
-        style={{verticalAlign: 'top'}} >Home</MenuItem>
-      <MenuItem linkButton={true} href="/#/currentBets"
-        style={{verticalAlign: 'top'}}>My Bets</MenuItem>
-    </LeftNav>
-  </div>
-    <div id = "indent">
+
     <p> The Marketplace</p>
     <CardListContainer />
-    </div>
     </div>
     )
   }

@@ -118,6 +118,30 @@ app.get('/api/currentBets', isLoggedIn, function(req, res) {
 		});
 });
 
+app.get('/api/profileJSON', isLoggedIn, function(req, res) {
+
+	User.findOne({
+	'_id': req.user.id
+	})
+		.populate('currentBets.bet')
+		.exec(function(error, user) {
+			var bets = [];
+			var betIds = [];
+
+			for (var j = 0; j < user.currentBets.length; j++) {
+				var currentBet = user.currentBets[j];
+				betIds.push(currentBet.bet.id);
+			}
+
+			Bet.find({
+				'_id': { $nin: betIds}
+			}, function(err, unseenBets) {
+				res.json(unseenBets).end();
+				// res.render('bets.ejs', { unseenBets : unseenBets });
+			});
+		});
+});
+
 // WHEN A USER ADDS A BET, pass the bet object in as a json
 // if you have the betID that represenents a bet then you can say:
 // curl -H "Content-Type: application/json" -X POST -d '{"betId":"57001f65944baac657bcc109"}' http://localhost:8080/currentBets

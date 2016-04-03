@@ -27,36 +27,27 @@ var TextField = require('material-ui/lib/text-field');
 var FlatButton  = require('material-ui/lib/flat-button');
 
 var LeftNav = require('material-ui/lib/left-nav');
-
-
-
 var Card2 = require('./Card2');
 var BugFilter2 = require('./BugFilter2');
 var BugAdd = require('./BugAdd');
 
-var Marketplace2 = require('./Marketplace2');
-var BugEdit = require('./BugEdit');
-var CurrentBets = require('./CurrentBets');
-
 var CardListContainer = require('./CardListContainer');
 
 
-var Home = React.createClass({
+
+
+var Profile = React.createClass({
   getInitialState: function() {
     return {cards: []};
   },
   render: function() {
     return (
     <div>
-
-
-    <div id="indent">
-    <p> Home222 </p>
-    <Marketplace2 />
-    </div>
+    <p> My Profile</p>
+    <CardListContainer />
     </div>
     )
   }
 });
 
-module.exports = Home;
+module.exports = Profile;
