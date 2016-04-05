@@ -94,7 +94,7 @@ module.exports = function(app, passport) {
 
 
 //////////////////////// GREENWALD ROUTES //////////////////////////////////////
-app.get('/api/currentBets', isLoggedIn, function(req, res) {
+app.get('/api/userAvailableBets', isLoggedIn, function(req, res) {
 
 	User.findOne({
 	'_id': req.user.id
@@ -128,7 +128,7 @@ app.get('/api/profileJSON', isLoggedIn, function(req, res) {
 // WHEN A USER ADDS A BET, pass the bet object in as a json
 // if you have the betID that represenents a bet then you can say:
 // curl -H "Content-Type: application/json" -X POST -d '{"betId":"57001f65944baac657bcc109"}' http://localhost:8080/currentBets
-app.post('/api/currentBets', isLoggedIn, function(req, res) {
+app.post('/api/userTakenBets', isLoggedIn, function(req, res) {
 	User.find({}, function(err, users) {
 		// Add the new rating to the database
 			var newBet = {chosenTeam: req.body.chosenTeam, bet: req.body.betId};

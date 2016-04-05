@@ -14,30 +14,30 @@ var fakeData = [
   {id: 5, teamOne: 'Nets', teamTwo:'Knicks', vendor:'Ven5', odds: 'Knicks by 10', percentage:'50%', product: 'chicken'}
 ];
 
-var currentBets = [
+var userTakenBets = [
 
 ];
 
 
 var CardListContainer = React.createClass({
   render: function() {
-    console.log("Rendering CardListContainer", this.state.availableBets.length);
+    console.log("Rendering CardListContainer", this.state.userAvailableBets.length);
     return (
       <div>
       <h2>Available Bets </h2>
-      <CardList data = {this.state.availableBets} handleDelete = {this.handleDelete} handleRemove = {this.handleRemove} isCurrent = {false}/>
+      <CardList data = {this.state.userAvailableBets} handleDelete = {this.handleDelete} handleRemove = {this.handleRemove} isCurrent = {false}/>
       <h2>Current Bets </h2>
-      <CardList data = {this.state.currentBets} handleDelete = {this.handleDelete} handleRemove = {this.handleRemove} isCurrent = {true} />
+      <CardList data = {this.state.userTakenBets} handleDelete = {this.handleDelete} handleRemove = {this.handleRemove} isCurrent = {true} />
 
       </div>
     );
   },
   getInitialState: function() {
-    return ({availableBets: [], currentBets : currentBets});
+    return ({userAvailableBets: [], userTakenBets : userTakenBets});
   },
   componentDidMount: function() {
-    $.ajax('/api/currentBets').done(function(data) {
-      this.setState({availableBets: data});
+    $.ajax('/api/userAvailableBets').done(function(data) {
+      this.setState({userAvailableBets: data});
     }.bind(this));
   },
 
@@ -46,14 +46,14 @@ var CardListContainer = React.createClass({
     // debugger;
     console.log("Removing Available Bet");
 
-    var currentBetsModified = this.state.currentBets.slice();
-    currentBetsModified.push(this.state.availableBets.filter((i, _) => i.id == cardID)[0]);
+    var userTakenBetsModified = this.state.userTakenBets.slice();
+    userTakenBetsModified.push(this.state.userAvailableBets.filter((i, _) => i.id == cardID)[0]);
 
     //debugger;
 
-    var availableBetsModified = this.state.availableBets.slice();
-    availableBetsModified = availableBetsModified.filter((i, _) => i.id !== cardID)
-    this.setState({availableBets: availableBetsModified, currentBets: currentBetsModified});
+    var userAvailableBetsModified = this.state.userAvailableBets.slice();
+    userAvailableBetsModified = userAvailableBetsModified.filter((i, _) => i.id !== cardID)
+    this.setState({userAvailableBets: userAvailableBetsModified, userTakenBets: userTakenBetsModified});
 
   },
 
@@ -61,13 +61,13 @@ var CardListContainer = React.createClass({
     //debugger;
     console.log("Removing Current Bet");
     if(isCurrent){
-    var currentBetsModified = this.state.currentBets.slice();
-    currentBetsModified = currentBetsModified.filter((i, _) => i.id !== cardID)
-    this.setState({currentBets: currentBetsModified});
+    var userTakenBetsModified = this.state.userTakenBets.slice();
+    userTakenBetsModified = userTakenBetsModified.filter((i, _) => i.id !== cardID)
+    this.setState({userTakenBets: userTakenBetsModified});
   } else {
-    var availableBetsModified = this.state.availableBets.slice();
-    availableBetsModified = availableBetsModified.filter((i, _) => i.id !== cardID)
-    this.setState({availableBets: availableBetsModified});
+    var userAvailableBetsModified = this.state.userAvailableBets.slice();
+    userAvailableBetsModified = userAvailableBetsModified.filter((i, _) => i.id !== cardID)
+    this.setState({userAvailableBets: userAvailableBetsModified});
 
   }
 
