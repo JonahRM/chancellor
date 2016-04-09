@@ -74,7 +74,7 @@ var Marketplace2 = React.createClass({
     <div>
 
     <p> The Marketplace</p>
-    <CardListContainer />
+    <CardListContainer marketplace = {true}/>
     </div>
     )
   }

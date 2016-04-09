@@ -44,7 +44,7 @@ var CurrentBets = React.createClass({
     return (
     <div>
     <p> The Current Bets</p>
-    <CardListContainer />
+    <CardListContainer marketplace = {false}/>
     </div>
     )
   }

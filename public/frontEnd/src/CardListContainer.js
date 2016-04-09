@@ -22,13 +22,27 @@ var userTakenBets = [
 var CardListContainer = React.createClass({
   render: function() {
     console.log("Rendering CardListContainer", this.state.userAvailableBets.length);
+
+    if (this.props.marketplace) {
+      var display = (
+        <div>
+        <h2>Available Bets </h2>
+        <CardList data = {this.state.userAvailableBets} handleDelete = {this.handleDelete} handleRemove = {this.handleRemove} isCurrent = {false}/>
+        </div>
+      );
+    } else {
+      var display = (
+        <div>
+        <h2>Current Bets </h2>
+        <CardList data = {this.state.userTakenBets} handleDelete = {this.handleDelete} handleRemove = {this.handleRemove} isCurrent = {true} />
+        </div>
+      );
+    }
+
+
     return (
       <div>
-      <h2>Available Bets </h2>
-      <CardList data = {this.state.userAvailableBets} handleDelete = {this.handleDelete} handleRemove = {this.handleRemove} isCurrent = {false}/>
-      <h2>Current Bets </h2>
-      <CardList data = {this.state.userTakenBets} handleDelete = {this.handleDelete} handleRemove = {this.handleRemove} isCurrent = {true} />
-
+      {display}
       </div>
     );
   },
@@ -41,35 +55,61 @@ var CardListContainer = React.createClass({
     }.bind(this));
   },
 
-
-  handleDelete: function(cardID) {
+//I've taken a bet I want
+  handleDelete: function(cardID, userChosenTeam) {
     // debugger;
     console.log("Removing Available Bet");
 
-    var userTakenBetsModified = this.state.userTakenBets.slice();
-    userTakenBetsModified.push(this.state.userAvailableBets.filter((i, _) => i.id == cardID)[0]);
+    // var userTakenBetsModified = this.state.userTakenBets.slice();
+    // userTakenBetsModified.push(this.state.userAvailableBets.filter((i, _) => i.id == cardID)[0]);
+    //
+    // //debugger;
+    //
+    // var userAvailableBetsModified = this.state.userAvailableBets.slice();
+    // userAvailableBetsModified = userAvailableBetsModified.filter((i, _) => i.id !== cardID)
+    // this.setState({userAvailableBets: userAvailableBetsModified, userTakenBets: userTakenBetsModified});
 
-    //debugger;
 
-    var userAvailableBetsModified = this.state.userAvailableBets.slice();
-    userAvailableBetsModified = userAvailableBetsModified.filter((i, _) => i.id !== cardID)
-    this.setState({userAvailableBets: userAvailableBetsModified, userTakenBets: userTakenBetsModified});
+    var data = {
+      betId : cardID,
+      chosenTeam : userChosenTeam
+    }
+    var baseURL = '/api/userTakenBets/add';
+    $.ajax({
+      type: 'POST',
+      url: baseURL,
+      data: data,
+      error: function(e) {
+        alert('This is the error ' + error);
+      },
+      success: function(response) {
+        console.log("bet is now put in userTakenBets");
+        $.ajax('/api/userAvailableBets').done(function(data) {
+          this.setState({userAvailableBets: data});
+        }.bind(this));
+      }
+    });
+
 
   },
 
   handleRemove: function(cardID, isCurrent) {
     //debugger;
     console.log("Removing Current Bet");
+
+    // I have taken a bet but changed my mind and want to delete it
     if(isCurrent){
     var userTakenBetsModified = this.state.userTakenBets.slice();
     userTakenBetsModified = userTakenBetsModified.filter((i, _) => i.id !== cardID)
     this.setState({userTakenBets: userTakenBetsModified});
-  } else {
+  }
+  else {
     var userAvailableBetsModified = this.state.userAvailableBets.slice();
     userAvailableBetsModified = userAvailableBetsModified.filter((i, _) => i.id !== cardID)
     this.setState({userAvailableBets: userAvailableBetsModified});
 
   }
+  //^^I don't like an available bet and want it out of my feed
 
   }
 

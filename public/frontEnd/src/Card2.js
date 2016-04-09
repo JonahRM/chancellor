@@ -52,8 +52,8 @@ var Card2 = React.createClass({
     } else {
       var buttons = (
         <CardActions expandable={false}>
-          <FlatButton label="Take this bet" onClick = {this.handleSubmit}/>
-          <FlatButton label="No thanks" onClick = {this.handleRemoveCurrent}/>
+          <FlatButton label="Team One" onClick = {this.takeBet(this.props.teamOne)}/>
+          <FlatButton label="Team Two" onClick = {this.takeBet(this.props.teamTwo)}/>
         </CardActions>
       );
     }
@@ -84,9 +84,10 @@ var Card2 = React.createClass({
     )
   },
 
-  handleSubmit: function() {
+  takeBet: function(chosenTeam) {
       console.log("AvailableBet Clicked");
-      this.props.handleDelete(this.props.id );
+      console.log("Chosen Team ", chosenTeam);
+      this.props.handleDelete(this.props.id, chosenTeam);
   },
 
   handleRemoveCurrent: function() {

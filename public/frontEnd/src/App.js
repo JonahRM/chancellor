@@ -27,12 +27,26 @@ var NoMatch = React.createClass({
 
 var App = React.createClass({
   getInitialState: function() {
-    return {cards: [],page:"/#/marketplace"};
+    return {profile: [], cards: [],page:"/#/marketplace"};
 
 
 
   },
+  componentDidMount: function() {
+    $.ajax('/api/profileJSON').done(function(data) {
+      this.setState({profile: data});
+    }.bind(this));
+  },
   render: function() {
+
+    if(this.state.profile.user === undefined) {
+     var bob = ( "img/chancellorLogo.ico");
+    }
+    else {
+    var  bob =  (this.state.profile.user.facebook.profilePictureURL);
+    }
+
+
     return (
     <div>
       <div>
@@ -42,9 +56,11 @@ var App = React.createClass({
     <MenuItem linkButton={true} href="/#/profile" value="/#/profile"
       style={{verticalAlign: 'top',backgroundColor:(this.state.page==="/#/profile" ? "lightgray" : "transparent")}}
       onClick={ (function(e) {
-this.setState({page:"/#/profile"}) }).bind(this) } leftAvatar={
-  <Avatar src="http://zblogged.com/wp-content/uploads/2015/11/17.jpg" />
-}> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Me</MenuItem>
+this.setState({page:"/#/profile"}) }).bind(this) } leftAvatar={(
+<Avatar src= {bob}  />
+
+
+)}> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Me</MenuItem>
         <MenuItem linkButton={true} href="/#/marketplace" value="/#/marketplace"
           style={{verticalAlign: 'top',backgroundColor:(this.state.page==="/#/marketplace" ? "lightgray" : "transparent")}}
           onClick={ (function(e) {
