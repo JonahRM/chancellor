@@ -29,6 +29,8 @@ var TableHeaderColumn = require('material-ui/lib/table/table-header-column');
 var TableRow = require('material-ui/lib/table/table-row');
 var TableRowColumn = require('material-ui/lib/table/table-row-column');
 var AppBar = require('material-ui/lib/app-bar');
+var Avatar = require('material-ui/lib/avatar');
+
 
 var CardActions = require('material-ui/lib/card/card-actions');
 var TextField = require('material-ui/lib/text-field');
@@ -84,7 +86,7 @@ var Card2 = React.createClass({
 
   handleSubmit: function() {
       console.log("AvailableBet Clicked");
-      this.props.handleDelete(this.props.id);
+      this.props.handleDelete(this.props.id );
   },
 
   handleRemoveCurrent: function() {
