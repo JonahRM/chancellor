@@ -186,7 +186,28 @@ app.get('/api/userTakenBets', isLoggedIn, function(req, res) {
 		});
 });
 
+app.get('/api/addNewBet', function(req, res) {
+	res.render('addBet');
+});
 
+app.post('/api/addNewBet', function(req, res) {
+	console.log(JSON.stringify(req.body, null, '\t'));
+	var newBet = new Bet({
+		teamOne: req.body.teamOne,
+		photoOneURL: req.body.photoOneURL,
+		teamTwo: req.body.teamTwo,
+		photoTwoURL: req.body.photoTwoURL,
+		vendor: req.body.vendor,
+		vendorPhoto: req.body.vendorPhoto,
+		odds: req.body.odds,
+		percentage: req.body.percentage,
+		product: req.body.product
+	});
+	newBet.save(function(err, nb) {
+		console.log("This is the new bet: " + nb);
+		res.json(nb);
+	});
+});
 
 
 
