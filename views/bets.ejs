@@ -1,30 +1,53 @@
-<% for (var i = 0; i < unseenBets.length; i++) { %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<% for (var i = 0; i < unseenBets.length; i++) { %>
 <div>
   <h1> Bet: Team One: <%= unseenBets[i].teamOne %>, Team Two: <%= unseenBets[i].teamTwo %> </h1>
-  <button id="<%= unseenBets[i].id %>"><%= unseenBets[i].teamOne %></button>
-  <button id="<%= unseenBets[i].id %>"><%= unseenBets[i].teamTwo %></button>
+  <button class="choose-team" id="<%= unseenBets[i].id %>"><%= unseenBets[i].teamOne %></button>
+  <button class="choose-team"id="<%= unseenBets[i].id %>"><%= unseenBets[i].teamTwo %></button>
+  <button class="delete" id="<%= unseenBets[i].id %>">delete</button>
 </div>
 <% } %>
 <script>
 $('document').ready(function() {
-  $('button').on('click', function() {
+  $('.choose-team').on('click', function() {
     var data = {
       betId : this.id,
       chosenTeam : $(this).text()
     }
-    var baseURL = 'http://localhost:8080/currentBets';
+    var baseURL = 'http://localhost:8080/api/userTakenBets/add';
     $.ajax({
       type: 'POST',
       url: baseURL,
       data: data,
       error: function(e) {
-        alert('This is the error ' + error);
+        alert('This is the error ' + e);
       },
       success: function(response) {
         alert('This is the response ' + response);
       }
     });
   });
+
+  $('.delete').on('click', function() {
+    var data = {
+      betId : this.id
+    }
+    var baseURL = 'http://localhost:8080/api/userTakenBets/cancel';
+    $.ajax({
+      type: 'POST',
+      url: baseURL,
+      data: data,
+      error: function(e) {
+        alert('This is the error ' + JSON.stringify(e, null, '\t'));
+      },
+      success: function(response) {
+        alert('This is the response ' + response);
+      }
+    });
+  });
+
+
+
+
 });
 </script>
