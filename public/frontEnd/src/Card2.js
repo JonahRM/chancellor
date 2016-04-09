@@ -41,7 +41,7 @@ var anyValue = '*';
 var Card2 = React.createClass({
   render: function() {
     // console.log("Rendering bug table, num items:", this.props.bugs.length);
-    console.log("Rendering Card");
+    console.log("Rendering Card", this.props);
 
     if (this.props.isCurrent) {
       var buttons = (
@@ -52,8 +52,8 @@ var Card2 = React.createClass({
     } else {
       var buttons = (
         <CardActions expandable={false}>
-          <FlatButton label="Team One" onClick = {this.takeBet(this.props.teamOne)}/>
-          <FlatButton label="Team Two" onClick = {this.takeBet(this.props.teamTwo)}/>
+          <FlatButton label="Team One" onClick = {this.takeBet}/>
+          <FlatButton label="Team Two" onClick = {this.takeBet}/>
         </CardActions>
       );
     }
@@ -84,15 +84,15 @@ var Card2 = React.createClass({
     )
   },
 
-  takeBet: function(chosenTeam) {
+  takeBet: function() {
       console.log("AvailableBet Clicked");
-      console.log("Chosen Team ", chosenTeam);
-      this.props.handleDelete(this.props.id, chosenTeam);
+      console.log("Chosen Team ", this.props.cardID);
+      this.props.handleDelete(this.props.cardID, this.props.teamOne);
   },
 
   handleRemoveCurrent: function() {
       console.log("CurrentBet Removed");
-      this.props.handleRemove(this.props.id, this.props.isCurrent);
+      this.props.handleRemove(this.props.cardID, this.props.isCurrent);
   },
 
 

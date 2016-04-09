@@ -58,7 +58,7 @@ var CardListContainer = React.createClass({
 //I've taken a bet I want
   handleDelete: function(cardID, userChosenTeam) {
     // debugger;
-    console.log("Removing Available Bet");
+    console.log("Removing Available Bet", cardID);
 
     // var userTakenBetsModified = this.state.userTakenBets.slice();
     // userTakenBetsModified.push(this.state.userAvailableBets.filter((i, _) => i.id == cardID)[0]);
@@ -74,21 +74,21 @@ var CardListContainer = React.createClass({
       betId : cardID,
       chosenTeam : userChosenTeam
     }
-    var baseURL = '/api/userTakenBets/add';
-    $.ajax({
-      type: 'POST',
-      url: baseURL,
-      data: data,
-      error: function(e) {
-        alert('This is the error ' + error);
-      },
-      success: function(response) {
-        console.log("bet is now put in userTakenBets");
-        $.ajax('/api/userAvailableBets').done(function(data) {
-          this.setState({userAvailableBets: data});
-        }.bind(this));
-      }
-    });
+    // var baseURL = '/api/userTakenBets/add';
+    // $.ajax({
+    //   type: 'POST',
+    //   url: baseURL,
+    //   data: data,
+    //   error: function(e) {
+    //     alert('This is the error ' + error);
+    //   },
+    //   success: function(response) {
+    //     console.log("bet is now put in userTakenBets");
+    //     $.ajax('/api/userAvailableBets').done(function(data) {
+    //       this.setState({userAvailableBets: data});
+    //     }.bind(this));
+    //   }
+    // });
 
 
   },
