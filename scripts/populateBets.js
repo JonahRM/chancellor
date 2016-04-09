@@ -14,18 +14,68 @@ function addBets(data) {
       if (savedCount === NUMBER_OF_BETS - 1) {
         mongoose.disconnect();
       }
+      console.log(savedCount)
       savedCount++;
     });
   }
 }
 
-var fakeData = [
-  {teamOne: 'Patriots', photoOneURL: 'https://s-media-cache-ak0.pinimg.com/736x/b1/d8/b4/b1d8b4e9d1e1bcd1a5aabc492c7966e6.jpg', teamTwo:'Giants', photoTwoURL: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/New_York_Giants_logo.svg/2000px-New_York_Giants_logo.svg.png', vendor:'Dominos', vendorPhoto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Dominos_pizza_logo.svg/2000px-Dominos_pizza_logo.svg.png', odds: 'Patriots by 3', percentage:'50%', product: 'Large Cheese Pizza'},
-  {teamOne: 'Red Sox', photoOneURL: 'http://fullhdpictures.com/wp-content/uploads/2015/10/Boston-Red-Sox-Logos.jpg', teamTwo:'Yankees', photoTwoURL: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/25/NewYorkYankees_PrimaryLogo.svg/922px-NewYorkYankees_PrimaryLogo.svg.png', vendor:'Papa John\'s', vendorPhoto: 'http://www.milehighonthecheap.com/lotc-cms/wp-content/uploads/2013/07/papajohns-logo.jpg', odds: 'Red Sox by 2', percentage:'50%', product: 'Medium Pepperoni Pizza'},
-  {teamOne: 'Bruins', photoOneURL: 'https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Boston_Bruins.svg/1024px-Boston_Bruins.svg.png',teamTwo:'Devils', photoTwoURL: 'https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/New_Jersey_Devils_logo.svg/1018px-New_Jersey_Devils_logo.svg.png', vendor:'Chipotle', vendorPhoto: 'https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/Chipotle_Mexican_Grill_logo.svg/1024px-Chipotle_Mexican_Grill_logo.svg.png', odds: 'Bruins by 1', percentage:'50%', product: 'Burrito or Bowl'},
-  {teamOne: 'Celtics', photoOneURL: 'http://i.cdn.turner.com/nba/nba/teamsites/images/legacy/celtics/CelticsLogo_History.gif', teamTwo:'Knicks', photoTwoURL: 'http://content.sportslogos.net/logos/6/216/full/2nn48xofg0hms8k326cqdmuis.gif', vendor:'Target', vendorPhoto: 'http://abullseyeview.s3.amazonaws.com/wp-content/uploads/2014/04/targetlogo-6.jpeg', odds: 'Celtics by 8', percentage:'50%', product: '$20-$25 gift card'},
-  {teamOne: 'Lauren B.', photoOneURL: 'http://lovelace-media.imgix.net/uploads/361/78c9d900-9de1-0133-399e-06e18a8a4ae5.jpg?w=684&h=513&fit=crop&crop=faces&auto=format&q=70', teamTwo:'Jojo', photoTwoURL: 'http://okhereisthesituation.com/wp-content/uploads/2015/10/Screen-Shot-2015-12-10-at-12.02.40-AM-620x360.png?1f2a44', vendor:'KFC', vendorPhoto: 'https://upload.wikimedia.org/wikipedia/en/thumb/b/bf/KFC_logo.svg/1024px-KFC_logo.svg.png', odds: 'Lauren B. in 5 weeks', percentage:'50%', product: 'Chicken Bucket'}
-];
+var fakeData = [];
+
+var request = require("request");
+var xpath = require('xpath')
+var DOMParser = require('xmldom').DOMParser;
+var parser = new DOMParser();
 
 
-addBets(fakeData);
+request("http://xml.pinnaclesports.com/pinnacleFeed.aspx", function(error, response, body) {
+
+  var doc = parser.parseFromString(body, 'text/xml');
+  var homeTeam = ""
+  var AwayTeam = ""
+  var homeSpread = ""
+  var awaySpread = ""
+  var league = ""
+  var eventTime = ""
+  var events = xpath.select("pinnacle_line_feed/events/event", doc)
+  events.forEach(function(event){
+      league = xpath.select("league", event)[0].firstChild.data
+      eventTime =xpath.select("event_datetimeGMT", event)[0].firstChild.data
+    var participants = xpath.select("participants/participant", event)
+      participants.forEach(function(participant){
+        if (xpath.select("visiting_home_draw", participant)[0] != null) {
+          if(xpath.select("visiting_home_draw", participant)[0].firstChild.data === "Home") {
+            homeTeam = xpath.select("participant_name", participant)[0].firstChild.data
+          }
+          if (xpath.select("visiting_home_draw", participant)[0].firstChild.data === "Visiting"){
+            awayTeam = xpath.select("participant_name", participant)[0].firstChild.data
+          }
+        }
+
+      })
+        if (xpath.select("periods/period/spread/spread_home", event)[0] != null) {
+          homeSpread = xpath.select("periods/period/spread/spread_home", event)[0].firstChild.data
+          awaySpread = xpath.select("periods/period/spread/spread_visiting", event)[0].firstChild.data
+
+
+          fakeData.push({"teamOne": homeTeam,
+          "photoOneURL": "https://deniselefay.files.wordpress.com/2011/01/number-1.png",
+          "teamTwo": awayTeam,
+          "photoTwoUrl":"https://lh6.googleusercontent.com/-o5XaOSH6Y98/VCz-nAZ1lFI/AAAAAAAAAUw/W7F3Dal49ig/w600-h600/2.png",
+          "vendor": "Home Depot", "vendorPhoto":"https://www.bvscu.org/wp-content/uploads/2014/09/homedepot.jpg", 
+          "odds": homeSpread, 
+          "percentage": "50", 
+          "product": "Hammer", 
+          "eventTime": eventTime, 
+          "leage": league})
+      }
+  })
+  console.log("ABOUT TO SAVE DATA")
+
+
+  addBets(fakeData);
+  console.log("SAVED THE DATA")
+
+});
+
+
