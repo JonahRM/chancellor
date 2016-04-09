@@ -61,13 +61,13 @@ request("http://xml.pinnaclesports.com/pinnacleFeed.aspx", function(error, respo
           fakeData.push({"teamOne": homeTeam,
           "photoOneURL": "https://deniselefay.files.wordpress.com/2011/01/number-1.png",
           "teamTwo": awayTeam,
-          "photoTwoUrl":"https://lh6.googleusercontent.com/-o5XaOSH6Y98/VCz-nAZ1lFI/AAAAAAAAAUw/W7F3Dal49ig/w600-h600/2.png",
+          "photoTwoURL": "https://lh6.googleusercontent.com/-o5XaOSH6Y98/VCz-nAZ1lFI/AAAAAAAAAUw/W7F3Dal49ig/w600-h600/2.png",
           "vendor": "Home Depot", "vendorPhoto":"https://www.bvscu.org/wp-content/uploads/2014/09/homedepot.jpg", 
           "odds": homeSpread, 
           "percentage": "50", 
           "product": "Hammer", 
           "eventTime": eventTime, 
-          "leage": league})
+          "league": league})
       }
   })
   console.log("ABOUT TO SAVE DATA")

@@ -62,7 +62,6 @@ var Card2 = React.createClass({
       <Card>
         <CardHeader
           title={this.props.vendor}
-          subtitle={this.props.odds} off
           subtitle={this.props.product}
           actAsExpander={false}
           showExpandableButton={false}
@@ -77,7 +76,9 @@ var Card2 = React.createClass({
           rightAvatar={<Avatar src={this.props.photoTwoURL} />} />
         </List>
         <CardText>
-          This deal ends tomorrow!
+          League: {this.props.league}~~
+          Time: {this.props.eventTime}~~
+          {this.props.teamOne} Spread {this.props.odds}
         </CardText>
         {buttons}
       </Card>
