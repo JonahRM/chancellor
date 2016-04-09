@@ -47,11 +47,16 @@ var CardListContainer = React.createClass({
     );
   },
   getInitialState: function() {
-    return ({userAvailableBets: [], userTakenBets : userTakenBets});
+    return ({userAvailableBets: [], userTakenBets : []});
   },
   componentDidMount: function() {
     $.ajax('/api/userAvailableBets').done(function(data) {
+      console.log("This is the data" + JSON.stringify(data, null, '\t'));
       this.setState({userAvailableBets: data});
+    }.bind(this));
+    $.ajax('/api/userTakenBets').done(function(data) {
+      console.log("This is the data" + JSON.stringify(data, null, '\t'));
+      this.setState({userTakenBets: data});
     }.bind(this));
   },
 
@@ -68,8 +73,9 @@ var CardListContainer = React.createClass({
     // var userAvailableBetsModified = this.state.userAvailableBets.slice();
     // userAvailableBetsModified = userAvailableBetsModified.filter((i, _) => i.id !== cardID)
     // this.setState({userAvailableBets: userAvailableBetsModified, userTakenBets: userTakenBetsModified});
-
-
+    //
+    //
+    var self = this;
     var data = {
       betId : cardID,
       chosenTeam : userChosenTeam
@@ -83,10 +89,10 @@ var CardListContainer = React.createClass({
         alert('This is the error ' + error);
       },
       success: function(response) {
-        console.log("bet is now put in userTakenBets");
         $.ajax('/api/userAvailableBets').done(function(data) {
-          this.setState({userAvailableBets: data});
-        }.bind(this));
+          alert("This is the response " + JSON.stringify(data, null, '\t'));
+          self.setState({userAvailableBets: data});
+        });
       }
     });
 
@@ -99,14 +105,47 @@ var CardListContainer = React.createClass({
 
     // I have taken a bet but changed my mind and want to delete it
     if(isCurrent){
-    var userTakenBetsModified = this.state.userTakenBets.slice();
-    userTakenBetsModified = userTakenBetsModified.filter((i, _) => i.id !== cardID)
-    this.setState({userTakenBets: userTakenBetsModified});
+      var self = this;
+      var data = {
+        betId : cardID
+      }
+      var baseURL = '/api/userTakenBets/cancel';
+      $.ajax({
+        type: 'POST',
+        url: baseURL,
+        data: data,
+        error: function(e) {
+          alert('This is the error ' + error);
+        },
+        success: function(response) {
+          $.ajax('/api/userTakenBets').done(function(data) {
+            alert("This is the response " + JSON.stringify(data, null, '\t'));
+            self.setState({userTakenBets: data});
+          });
+        }
+      });
+
   }
   else {
-    var userAvailableBetsModified = this.state.userAvailableBets.slice();
-    userAvailableBetsModified = userAvailableBetsModified.filter((i, _) => i.id !== cardID)
-    this.setState({userAvailableBets: userAvailableBetsModified});
+    var self = this;
+    var data = {
+      betId : cardID
+    }
+    var baseURL = '/api/userTakenBets/cancel';
+    $.ajax({
+      type: 'POST',
+      url: baseURL,
+      data: data,
+      error: function(e) {
+        alert('This is the error ' + error);
+      },
+      success: function(response) {
+        $.ajax('/api/userTakenBets').done(function(data) {
+          alert("This is the response " + JSON.stringify(data, null, '\t'));
+          self.setState({userTakenBets: data});
+        });
+      }
+    });
 
   }
   //^^I don't like an available bet and want it out of my feed

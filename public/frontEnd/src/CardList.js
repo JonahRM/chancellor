@@ -44,7 +44,7 @@ var CardList = React.createClass({
     console.log("Rendering CardList");
     var that = this;
     var cards = this.props.data.map(function(card) {
-      return <Card2 key={card.id} id={card.id} vendor = {card.vendor}
+      return <Card2 key={card._id} cardID={card._id} vendor = {card.vendor}
       vendorPhoto = {card.vendorPhoto}
       teamOne = {card.teamOne}
       photoOneURL = {card.photoOneURL}

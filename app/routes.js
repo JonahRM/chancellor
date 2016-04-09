@@ -112,8 +112,8 @@ app.get('/api/userAvailableBets', isLoggedIn, function(req, res) {
 			Bet.find({
 				'_id': { $nin: betIds}
 			}, function(err, unseenBets) {
-				// res.json(unseenBets).end();
-				res.render('bets.ejs', { unseenBets : unseenBets });
+				res.json(unseenBets).end();
+				// res.render('bets.ejs', { unseenBets : unseenBets });
 			});
 		});
 });
@@ -180,8 +180,8 @@ app.get('/api/userTakenBets', isLoggedIn, function(req, res) {
 			Bet.find({
 				'_id': { $in: betIds}
 			}, function(err, seenBets) {
-				// res.json(seenBets).end();
-				res.render('bets.ejs', { unseenBets : seenBets });
+				res.json(seenBets).end();
+				// res.render('bets.ejs', { unseenBets : seenBets });
 			});
 		});
 });
