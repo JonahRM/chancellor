@@ -57,6 +57,7 @@ var CardList = React.createClass({
       product = {card.product}
       handleDelete = {that.props.handleDelete}
       handleRemove = {that.props.handleRemove}
+      userChosenTeam = {that.props.userChosenTeam}
       isCurrent = {that.props.isCurrent}/>
     });
 

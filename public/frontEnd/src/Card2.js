@@ -15,7 +15,7 @@ var FontIcon = require('material-ui/lib/font-icon');
 var Colors = require('material-ui/lib/styles').Colors;
 var List = require('material-ui/lib/lists/list');
 var ListItem = require('material-ui/lib/lists/list-item');
-
+var Styles= require('material-ui/lib/styles');
 var GridList = require('material-ui/lib/grid-list/grid-list');
 var GridTile = require('material-ui/lib/grid-list/grid-tile');
 var StarBorder = require('material-ui/lib/svg-icons/toggle/star-border');
@@ -45,18 +45,25 @@ var Card2 = React.createClass({
   render: function() {
     // console.log("Rendering bug table, num items:", this.props.bugs.length);
     console.log("Rendering Card");
-
+    var eventTime = this.props.eventTime;
+    eventTime = eventTime.split("-");
+    var eventDate =  eventTime[1] + "/" + eventTime[2].split(" ")[0];
+    var eventHour = eventTime[2].split(" ")[1];
+    var subtitleString = this.props.product + "  "+ this.props.percentage;
     if (this.props.isCurrent) {
       var buttons = (
+        <div>
+        <CardText>
+          Chosen Team: {this.props.userChosenTeam}
+        </CardText>
         <CardActions expandable={false}>
           <FlatButton label="CANCEL" onClick = {this.handleRemoveCurrent}/>
         </CardActions>
+        </div>
       );
     } else {
       var buttons = (
-        <CardActions expandable={false}>
-          <FlatButton label={this.props.teamOne} onClick = {this.takeBet} />
-          <FlatButton label={this.props.teamTwo} onClick = {this.takeBet} />
+        <CardActions>
         </CardActions>
       );
     }
@@ -65,33 +72,35 @@ var Card2 = React.createClass({
       <Card>
               <CardHeader
                 title={this.props.vendor}
-                subtitle={this.props.product}
+                subtitle={subtitleString}
+                subtitleColor= {Colors.redA700}
                 actAsExpander={false}
                 showExpandableButton={false}
                 avatar={this.props.vendorPhoto}
               />
-              <List>
-                <ListItem primaryText={this.props.teamOne}
+              <List onClick = {this.takeBet.bind(this, this.props.teamOne)}>
+
+                <ListItem primaryText={this.props.teamOne} secondaryText={this.props.odds}
+                className="muidocs-checkbox-example" iconStyle={{ fill: '#FF9800'}}
                 rightAvatar={<Avatar src={this.props.photoOneURL} />} />
               </List>
-              <List>
+              <List onClick = {this.takeBet.bind(this, this.props.teamTwo)}>
                 <ListItem primaryText={this.props.teamTwo}
                 rightAvatar={<Avatar src={this.props.photoTwoURL} />} />
               </List>
-              <CardText>
-                League: {this.props.league}~~
-                Time: {this.props.eventTime}~~
-                {this.props.teamOne} Spread {this.props.odds}
+                <CardText>
+                Time: {eventHour}   &nbsp;  &nbsp;  &nbsp;        Date: {eventDate}
               </CardText>
+
               {buttons}
             </Card>
     )
   },
 
-  takeBet: function() {
+  takeBet: function(chosenTeam, e) {
       console.log("AvailableBet Clicked");
-      console.log("Chosen Team ", this.props.teamOne);
-      this.props.handleDelete(this.props.cardID, this.props.teamOne);
+      console.log("Chosen Team ", chosenTeam);
+      this.props.handleDelete(this.props.cardID, chosenTeam);
   },
 
   handleRemoveCurrent: function() {

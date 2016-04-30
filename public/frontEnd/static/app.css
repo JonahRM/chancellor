@@ -13,11 +13,60 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-family: 'Open Sans';
+	font-family: 'Book Antiqua', serif;
+	color: "#1976d2";
 }
 
-.card-header-details .icon::before {
+.card-header-details .icon:before {
 	position: relative;
-  right: 7px;
-  top: 1px;
+	right: 7px;
+	top: 1px;
+	font-family: 'Book Antiqua', serif;
 }
+
+
+.muidocs-checkbox-example {
+  background-color: #0000FF;
+}
+
+.dropbtn {
+	background-color: #1976d2;
+	color: white;
+	padding: 16px;
+	font-size: 16px;
+	font-family: 'Book Antiqua', serif;
+	border: none;
+	cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+	background-color: #303f9f;
+}
+
+.dropdown {
+	position: relative;
+	float: right;
+	left: -40px;
+	top: -920px;
+	display: inline-block;
+}
+
+.dropdown-content {
+	display: none;
+	position: : absolute;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	overflow: auto;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+}
+
+.dropdown a:hover {background-color: #f1f1f1}
+
+.show {display:block;}

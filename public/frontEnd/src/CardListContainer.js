@@ -52,11 +52,11 @@ var CardListContainer = React.createClass({
   },
   componentDidMount: function() {
     $.ajax('/api/userAvailableBets').done(function(data) {
-      console.log("This is the data" + JSON.stringify(data, null, '\t'));
+      console.log("This is available bets" + JSON.stringify(data, null, '\t'));
       this.setState({userAvailableBets: data});
     }.bind(this));
     $.ajax('/api/userTakenBets').done(function(data) {
-      console.log("This is the data" + JSON.stringify(data, null, '\t'));
+      console.log("This is the taken data" + JSON.stringify(data, null, '\t'));
       this.setState({userTakenBets: data});
     }.bind(this));
   },
@@ -65,10 +65,11 @@ var CardListContainer = React.createClass({
   handleDelete: function(cardID, userChosenTeam) {
     // debugger;
     console.log("Removing Available Bet");
+    console.log("Chosen Team" + userChosenTeam);
     var self = this;
     var data = {
       betId : cardID,
-      chosenTeam : userChosenTeam
+      userChosenTeam : userChosenTeam
     }
     var baseURL = '/api/userTakenBets/add';
     $.ajax({

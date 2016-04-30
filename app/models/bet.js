@@ -12,6 +12,7 @@ var betSchema = mongoose.Schema({
   percentage: String,
   product: String,
   eventTime: String,
+  userChosenTeam: String,
   league: String
 });
 
