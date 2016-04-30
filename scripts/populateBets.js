@@ -40,6 +40,7 @@ request("http://xml.pinnaclesports.com/pinnacleFeed.aspx", function(error, respo
   var events = xpath.select("pinnacle_line_feed/events/event", doc)
   events.forEach(function(event){
       league = xpath.select("league", event)[0].firstChild.data
+      if (league == "NBA" | league == "MLB" | league == "Eng. Premier") {
       eventTime =xpath.select("event_datetimeGMT", event)[0].firstChild.data
     var participants = xpath.select("participants/participant", event)
       participants.forEach(function(participant){
@@ -70,6 +71,7 @@ request("http://xml.pinnaclesports.com/pinnacleFeed.aspx", function(error, respo
           "eventTime": eventTime,
           "league": league})
       }
+    }
   })
   console.log("ABOUT TO SAVE DATA")
 
