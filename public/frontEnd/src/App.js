@@ -48,7 +48,7 @@ var App = React.createClass({
     Show Chancellor icon until profile picture is loaded
     */
     if(this.state.profile.user === undefined) {
-      var logo = ( "img/chancellorLogo.ico");
+      var logo = ( "images/chancellorLogo.ico");
     }
     else {
       var logo =  (this.state.profile.user.facebook.profilePictureURL);
