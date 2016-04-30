@@ -31,35 +31,10 @@ var LeftNav = require('material-ui/lib/left-nav');
 
 
 var Card2 = require('./Card2');
-var BugFilter2 = require('./BugFilter2');
-var BugAdd = require('./BugAdd');
 
 var CardListContainer = require('./CardListContainer');
 
-var BugRow = React.createClass({
-  getStyle: function(width, bug) {
-    var style = {height: 24};
-    if (width) style.width = width;
-    if (bug.priority == 'P1') style.color = 'red';
-    return style;
-  },
-  render: function() {
-    //console.log("Rendering BugRow:", this.props.bug);
-    var bug = this.props.bug;
-    return (
-      <TableRow>
-        <TableRowColumn style={this.getStyle(180, bug)}>
-          <Link to={'/bugs/' + bug._id}>{bug._id}</Link>
-        </TableRowColumn>
-        <TableRowColumn style={this.getStyle(40, bug)}>{bug.status}</TableRowColumn>
-        <TableRowColumn style={this.getStyle(40, bug)}>{bug.priority}</TableRowColumn>
-        <TableRowColumn style={this.getStyle(60, bug)}>{bug.owner}</TableRowColumn>
-        <TableRowColumn style={this.getStyle(undefined, bug)}>{bug.title}</TableRowColumn>
-      </TableRow>
-    )
-  }
-});
-
+/*Markeplace displays all of the available bets and renders a CardListContainer*/
 
 var Marketplace2 = React.createClass({
   getInitialState: function() {

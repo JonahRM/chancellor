@@ -28,8 +28,6 @@ var FlatButton  = require('material-ui/lib/flat-button');
 
 var LeftNav = require('material-ui/lib/left-nav');
 var Card2 = require('./Card2');
-var BugFilter2 = require('./BugFilter2');
-var BugAdd = require('./BugAdd');
 
 var CardListContainer = require('./CardListContainer');
 

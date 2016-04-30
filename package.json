@@ -34,6 +34,9 @@
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.0",
     "passport-local": "^1.0.0",
-    "passport-twitter": "^1.0.4"
+    "passport-twitter": "^1.0.4",
+    "request": "^2.72.0",
+    "xmldom": "^0.1.22",
+    "xpath": "0.0.23"
   }
 }

@@ -31,6 +31,8 @@ var TableRowColumn = require('material-ui/lib/table/table-row-column');
 var AppBar = require('material-ui/lib/app-bar');
 var Avatar = require('material-ui/lib/avatar');
 
+var Popover  = require('material-ui/lib/popover/popover');
+var PopoverAnimationFromTop  = require('material-ui/lib/popover/popover-animation-from-top');
 
 var CardActions = require('material-ui/lib/card/card-actions');
 var TextField = require('material-ui/lib/text-field');
@@ -38,6 +40,7 @@ var FlatButton  = require('material-ui/lib/flat-button');
 
 
 var anyValue = '*';
+
 var Card2 = React.createClass({
   render: function() {
     // console.log("Rendering bug table, num items:", this.props.bugs.length);
@@ -52,35 +55,36 @@ var Card2 = React.createClass({
     } else {
       var buttons = (
         <CardActions expandable={false}>
-          <FlatButton label="Team One" onClick = {this.takeBet}/>
-          <FlatButton label="Team Two" onClick = {this.takeBet}/>
+          <FlatButton label={this.props.teamOne} onClick = {this.takeBet} />
+          <FlatButton label={this.props.teamTwo} onClick = {this.takeBet} />
         </CardActions>
       );
     }
 
     return (
       <Card>
-        <CardHeader
-          title={this.props.vendor}
-          subtitle={this.props.odds} off
-          subtitle={this.props.product}
-          actAsExpander={false}
-          showExpandableButton={false}
-          avatar={this.props.vendorPhoto}
-        />
-        <List>
-          <ListItem primaryText={this.props.teamOne}
-          rightAvatar={<Avatar src={this.props.photoOneURL} />} />
-        </List>
-        <List>
-          <ListItem primaryText={this.props.teamTwo}
-          rightAvatar={<Avatar src={this.props.photoTwoURL} />} />
-        </List>
-        <CardText>
-          This deal ends tomorrow!
-        </CardText>
-        {buttons}
-      </Card>
+              <CardHeader
+                title={this.props.vendor}
+                subtitle={this.props.product}
+                actAsExpander={false}
+                showExpandableButton={false}
+                avatar={this.props.vendorPhoto}
+              />
+              <List>
+                <ListItem primaryText={this.props.teamOne}
+                rightAvatar={<Avatar src={this.props.photoOneURL} />} />
+              </List>
+              <List>
+                <ListItem primaryText={this.props.teamTwo}
+                rightAvatar={<Avatar src={this.props.photoTwoURL} />} />
+              </List>
+              <CardText>
+                League: {this.props.league}~~
+                Time: {this.props.eventTime}~~
+                {this.props.teamOne} Spread {this.props.odds}
+              </CardText>
+              {buttons}
+            </Card>
     )
   },
 

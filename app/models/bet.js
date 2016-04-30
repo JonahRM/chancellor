@@ -10,7 +10,9 @@ var betSchema = mongoose.Schema({
   vendorPhoto: String,
   odds: String,
   percentage: String,
-  product: String
+  product: String,
+  eventTime: String,
+  league: String
 });
 
 module.exports = mongoose.model('Bet', betSchema);

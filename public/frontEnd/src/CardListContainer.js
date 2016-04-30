@@ -4,7 +4,6 @@ var $ = require('jquery');
 var Link = require('react-router').Link;
 
 var CardList = require('./CardList');
-//fetch data directly from node server
 
 var fakeData = [
   {id: 1, teamOne: 'Bros', teamTwo:'SeaHawks', vendor:'Ven1', odds: 'Broncos by 3', percentage:'50%', product: 'Large Cheese Pizza'},
@@ -18,8 +17,10 @@ var userTakenBets = [
 
 ];
 
-
+/*A CardListContainer handles the method functionality for deleting and adding cards to a CardList. It
+also displays a CardList*/
 var CardListContainer = React.createClass({
+  /*Depending on the whether the cardlist is for available bets or current bets it will handle downstream logic differently */
   render: function() {
     console.log("Rendering CardListContainer", this.state.userAvailableBets.length);
 
@@ -60,21 +61,10 @@ var CardListContainer = React.createClass({
     }.bind(this));
   },
 
-//I've taken a bet I want
+/*Once a user takes a bet handleDelete will take that bet out of the available bets and put it in the current bet*/
   handleDelete: function(cardID, userChosenTeam) {
     // debugger;
     console.log("Removing Available Bet");
-
-    // var userTakenBetsModified = this.state.userTakenBets.slice();
-    // userTakenBetsModified.push(this.state.userAvailableBets.filter((i, _) => i.id == cardID)[0]);
-    //
-    // //debugger;
-    //
-    // var userAvailableBetsModified = this.state.userAvailableBets.slice();
-    // userAvailableBetsModified = userAvailableBetsModified.filter((i, _) => i.id !== cardID)
-    // this.setState({userAvailableBets: userAvailableBetsModified, userTakenBets: userTakenBetsModified});
-    //
-    //
     var self = this;
     var data = {
       betId : cardID,
@@ -90,7 +80,6 @@ var CardListContainer = React.createClass({
       },
       success: function(response) {
         $.ajax('/api/userAvailableBets').done(function(data) {
-          alert("This is the response " + JSON.stringify(data, null, '\t'));
           self.setState({userAvailableBets: data});
         });
       }
@@ -98,7 +87,8 @@ var CardListContainer = React.createClass({
 
 
   },
-
+/*If a user cancels a bet they've previously agreed to it will delete that bet from your currentBets and
+place it back in your AvailableBets*/
   handleRemove: function(cardID, isCurrent) {
     //debugger;
     console.log("Removing Current Bet");
@@ -119,7 +109,6 @@ var CardListContainer = React.createClass({
         },
         success: function(response) {
           $.ajax('/api/userTakenBets').done(function(data) {
-            alert("This is the response " + JSON.stringify(data, null, '\t'));
             self.setState({userTakenBets: data});
           });
         }
@@ -148,8 +137,6 @@ var CardListContainer = React.createClass({
     });
 
   }
-  //^^I don't like an available bet and want it out of my feed
-
   }
 
 });
