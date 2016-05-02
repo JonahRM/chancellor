@@ -1,10 +1,84 @@
-<!-- views/index.ejs -->
+<!-- /views/index.ejs -->
+<!-- The homepage -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Start bootstrap setup -->
+	<!-- The below 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+	integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+	crossorigin="anonymous">
+  <!-- End bootstrap setup -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="stylesheets/index.css">
+  <title>Chancellor | Home</title>
+</head>
+
+<body>
+
+<!-- Start jumbotron  -->
+<div class="homepage-hero-module">
+  <div class="video-container">
+    <div class="title-container">
+      <div class="headline">
+        <h1><span class="orange-inline">Welcome to Chancellor.</span></h1>
+
+      </div>
+      <div class="description">
+        <div class="inner">Chancellor catch phrase.</div>
+				<a href="/api/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span> User Login</a>
+				<a href="/api/login" class="btn btn-default"><span class="fa fa-user"></span> Company Login</a>
+				<a href="/api/signup" class="btn btn-default"><span class="fa fa-user"></span> Company Signup</a>
+      </div>
+    </div>
+    <div class="filter"></div>
+		<video class="fillWidth" autoplay loop poster='images/extremeSports.jpg'>
+			<source src="videos/extremeSports.webm" type="video/webm" />
+			<source src="videos/extremeSports.mp4" type="video/mp4" />
+		</video>
+  </div>
+</div>
+<!-- End jumbotron -->
+
+<!-- Start required bootstrap javascript libraries -->
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+ integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+ crossorigin="anonymous"></script>
+<!-- End required bootstrap javascript libraries -->
+
+<!-- Start video playback javascript -->
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min.js"></script>
+<script type="text/javascript" src="javascripts/index.js"></script>
+<!-- End video playback javascript -->
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+<!--
+
 <!doctype html>
 <html>
 <head>
 	<title>Node Authentication</title>
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	<style>
 		body 		{ padding-top:80px; }
 	</style>
@@ -26,4 +100,4 @@
 
 </div>
 </body>
-</html>
+</html> -->
