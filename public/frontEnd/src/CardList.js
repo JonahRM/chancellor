@@ -40,8 +40,10 @@ var Card2 = require('./Card2');
 
 var CardList = React.createClass({
 
+
   render: function() {
     console.log("Rendering CardList");
+
     var that = this;
     var cards = this.props.data.map(function(card) {
       return <Card2 key={card._id} cardID={card._id} vendor = {card.vendor}
@@ -77,6 +79,7 @@ var CardList = React.createClass({
 
 
     );
+
   }
 });
 

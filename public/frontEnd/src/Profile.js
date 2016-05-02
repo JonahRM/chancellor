@@ -42,15 +42,11 @@ var Profile = React.createClass({
     }.bind(this));
   },
   render: function() {
-    console.log("Yo", this.state.profile.user);
 
     if(this.state.profile.user === undefined) {
       return <div> Logging in ...</div>
-      console.log("Yo", this.state.profile.user);
-        console.log("Yo", this.state.profile.user.facebook.name);
     }
     else {
-
     var emailString = "Current Email: "+ this.state.profile.user.facebook.email;
 
     return (

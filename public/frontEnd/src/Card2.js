@@ -44,7 +44,6 @@ var Card2 = React.createClass({
 
   render: function() {
     // console.log("Rendering bug table, num items:", this.props.bugs.length);
-    console.log("Rendering Card");
     var eventTime = this.props.eventTime;
 
     eventTime = eventTime.split("-");
@@ -57,9 +56,6 @@ var Card2 = React.createClass({
     if (this.props.isCurrent) {
       var buttons = (
         <div>
-        <CardText>
-          Chosen Team: {this.state.userChosenTeam}
-        </CardText>
         <CardActions expandable={false}>
           <FlatButton label="CANCEL" onClick = {this.handleRemoveCurrent}/>
         </CardActions>

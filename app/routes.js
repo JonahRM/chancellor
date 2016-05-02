@@ -131,7 +131,7 @@ app.get('/api/profileJSON', isLoggedIn, function(req, res) {
 app.post('/api/userTakenBets/add', isLoggedIn, function(req, res) {
 	User.find({}, function(err, users) {
 		// Add the new rating to the database
-			var newBet = {chosenTeam: req.body.chosenTeam, bet: req.body.betId};
+			var newBet = {userChosenTeam: req.body.userChosenTeam, bet: req.body.betId};
 			User.update(
 					{ '_id': req.user.id,
 					'currentBets.bet' : {$ne: req.body.betId}}, //makes sure not to add duplicates

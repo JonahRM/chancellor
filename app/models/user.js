@@ -13,7 +13,7 @@ var userSchema = mongoose.Schema({
         profilePictureURL : String
     },
     currentBets : [{
-      chosenTeam : String,
+      userChosenTeam : String,
       bet : {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Bet'
