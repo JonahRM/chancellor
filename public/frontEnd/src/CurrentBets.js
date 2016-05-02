@@ -41,7 +41,6 @@ var CurrentBets = React.createClass({
   render: function() {
     return (
     <div>
-    <p> The Current Bets</p>
     <CardListContainer marketplace = {false}/>
     </div>
     )

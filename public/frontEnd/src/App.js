@@ -83,7 +83,12 @@ var App = React.createClass({
           style={{verticalAlign: 'top',backgroundColor:(this.state.page==="/#/currentBets" ? "lightgray" : "transparent")}}
           onClick={ (function(e) {
           this.setState({page:"/#/currentBets"}) }).bind(this) } >
-          My Bets
+          My Deals
+          </MenuItem>
+
+          <MenuItem
+          style={{verticalAlign: 'top'}}>
+          Settings
           </MenuItem>
 
 

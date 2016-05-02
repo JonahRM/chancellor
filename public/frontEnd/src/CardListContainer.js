@@ -5,17 +5,7 @@ var Link = require('react-router').Link;
 
 var CardList = require('./CardList');
 
-var fakeData = [
-  {id: 1, teamOne: 'Bros', teamTwo:'SeaHawks', vendor:'Ven1', odds: 'Broncos by 3', percentage:'50%', product: 'Large Cheese Pizza'},
-  {id: 2, teamOne: 'Bs', teamTwo:'SeaHaks', vendor:'Ven2', odds: 'Broncos by 3', percentage:'50%', product: 'pizza'},
-  {id: 3, teamOne: 'Boncos', teamTwo:'SHawks', vendor:'Ven3', odds: 'Broncos by 3', percentage:'50%', product: 'pizza'},
-  {id: 4, teamOne: 'Broncos', teamTwo:'Seawks', vendor:'Ven4', odds: 'Broncos by 3', percentage:'50%', product: 'pizza'},
-  {id: 5, teamOne: 'Nets', teamTwo:'Knicks', vendor:'Ven5', odds: 'Knicks by 10', percentage:'50%', product: 'chicken'}
-];
-
-var userTakenBets = [
-
-];
+var userTakenBets = [];
 
 /*A CardListContainer handles the method functionality for deleting and adding cards to a CardList. It
 also displays a CardList*/
@@ -27,14 +17,14 @@ var CardListContainer = React.createClass({
     if (this.props.marketplace) {
       var display = (
         <div>
-        <h2>Available Bets </h2>
+        <h2>Available Deals: </h2>
         <CardList data = {this.state.userAvailableBets} handleDelete = {this.handleDelete} handleRemove = {this.handleRemove} isCurrent = {false}/>
         </div>
       );
     } else {
       var display = (
         <div>
-        <h2>Current Bets </h2>
+        <h2>Your Current Deals: </h2>
         <CardList data = {this.state.userTakenBets} handleDelete = {this.handleDelete} handleRemove = {this.handleRemove} isCurrent = {true} />
         </div>
       );

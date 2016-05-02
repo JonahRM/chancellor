@@ -40,34 +40,44 @@ var FlatButton  = require('material-ui/lib/flat-button');
 
 
 var anyValue = '*';
-
 var Card2 = React.createClass({
+
   render: function() {
     // console.log("Rendering bug table, num items:", this.props.bugs.length);
     console.log("Rendering Card");
     var eventTime = this.props.eventTime;
+
     eventTime = eventTime.split("-");
     var eventDate =  eventTime[1] + "/" + eventTime[2].split(" ")[0];
     var eventHour = eventTime[2].split(" ")[1];
     var subtitleString = this.props.product + " at "+ this.props.percentage + "% off!";
+    var chosenTeamStringOne = "Click to choose the " + this.props.teamOne;
+    var chosenTeamStringTwo = "Click to choose the " + this.props.teamTwo;
+    var oddsTwo = this.props.odds * (-1);
     if (this.props.isCurrent) {
       var buttons = (
         <div>
         <CardText>
-        Are you sure your want to cancel your deal?
-        </CardText>
-        <CardText>
-          Chosen Team: {this.props.userChosenTeam}
+          Chosen Team: {this.state.userChosenTeam}
         </CardText>
         <CardActions expandable={false}>
           <FlatButton label="CANCEL" onClick = {this.handleRemoveCurrent}/>
         </CardActions>
         </div>
       );
+      var question = (
+        <CardText>
+        </CardText>
+      );
     } else {
       var buttons = (
         <CardActions>
         </CardActions>
+      );
+      var question = (
+        <CardText>
+        if the {this.state.userChosenTeam} win by {this.props.odds}, you get {this.props.percentage}% off!
+        </CardText>
       );
     }
     var styles = {
@@ -75,6 +85,25 @@ var Card2 = React.createClass({
                 padding: 20,
                   },
           };
+
+    if(this.state.userChosenTeam === this.props.teamOne){
+      var displayTeam = (
+        <List onClick = {this.takeBet.bind(this, this.props.teamOne)}>
+          <ListItem primaryText= {chosenTeamStringOne} secondaryText={this.props.odds}
+          className="muidocs-checkbox-example"/>
+        </List>
+      );
+    } else {
+
+      var displayTeam = (
+        <List onClick = {this.takeBet.bind(this, this.props.teamTwo)}>
+          <ListItem primaryText={chosenTeamStringTwo}
+          secondaryText={oddsTwo}/>
+        </List>
+      );
+    }
+
+
     return (
       <div>
       <Card>
@@ -87,14 +116,15 @@ var Card2 = React.createClass({
                 avatar={this.props.vendorPhoto}
 
               />
-              <List onClick = {this.handleTouchTap}>
-
-                <ListItem primaryText={this.props.teamOne} secondaryText={this.props.odds}
+              <List onClick = {this.onClick.bind(this, this.props.teamOne)}>
+                <ListItem onClick = {this.handleTouchTap}
+                primaryText={this.props.teamOne} secondaryText={this.props.odds}
                 className="muidocs-checkbox-example"
                 rightAvatar={<Avatar src={this.props.photoOneURL} />} />
               </List>
-              <List onClick = {this.handleTouchTap}>
-                <ListItem primaryText={this.props.teamTwo}
+              <List onClick = {this.onClick.bind(this, this.props.teamTwo)}>
+                <ListItem onClick = {this.handleTouchTap}
+                primaryText={this.props.teamTwo}
                 rightAvatar={<Avatar src={this.props.photoTwoURL} />} />
               </List>
                 <CardText>
@@ -122,19 +152,8 @@ var Card2 = React.createClass({
                     avatar={this.props.vendorPhoto}
 
                   />
-                  <List onClick = {this.takeBet.bind(this, this.props.teamOne)}>
-
-                    <ListItem primaryText={this.props.teamOne} secondaryText={this.props.odds}
-                    className="muidocs-checkbox-example"
-                    rightAvatar={<Avatar src={this.props.photoOneURL} />} />
-                  </List>
-                  <List onClick = {this.takeBet.bind(this, this.props.teamTwo)}>
-                    <ListItem primaryText={this.props.teamTwo}
-                    rightAvatar={<Avatar src={this.props.photoTwoURL} />} />
-                  </List>
-                  <CardText>
-                  Are you sure you want to to take this deal?!
-                  </CardText>
+                  {displayTeam}
+                  {question}
                     <CardText>
                     Time: {eventHour}   &nbsp;  &nbsp;  &nbsp;        Date: {eventDate}
                   </CardText>
@@ -153,7 +172,7 @@ var Card2 = React.createClass({
   },
   takeBet: function(chosenTeam, e) {
       console.log("AvailableBet Clicked");
-      console.log("Chosen Team ", chosenTeam);
+      console.log("Chosen Team ", this.props.userChosenTeam);
       this.props.handleDelete(this.props.cardID, chosenTeam);
   },
 
@@ -161,7 +180,12 @@ var Card2 = React.createClass({
       console.log("CurrentBet Removed");
       this.props.handleRemove(this.props.cardID, this.props.isCurrent);
   },
-
+  onClick: function(chosenTeam, e) {
+    console.log("User Chosen Team:", chosenTeam);
+      this.setState({
+        userChosenTeam: chosenTeam,
+      });
+    },
   handleTouchTap: function(event) {
     console.log("touch tapped");
       this.setState({

@@ -47,8 +47,6 @@ var Marketplace2 = React.createClass({
   render: function() {
     return (
     <div>
-
-    <p> The Marketplace</p>
     <CardListContainer marketplace = {true}/>
     </div>
     )
