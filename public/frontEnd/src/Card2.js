@@ -49,10 +49,13 @@ var Card2 = React.createClass({
     eventTime = eventTime.split("-");
     var eventDate =  eventTime[1] + "/" + eventTime[2].split(" ")[0];
     var eventHour = eventTime[2].split(" ")[1];
-    var subtitleString = this.props.product + "  "+ this.props.percentage;
+    var subtitleString = this.props.product + " at "+ this.props.percentage + "% off!";
     if (this.props.isCurrent) {
       var buttons = (
         <div>
+        <CardText>
+        Are you sure your want to cancel your deal?
+        </CardText>
         <CardText>
           Chosen Team: {this.props.userChosenTeam}
         </CardText>
@@ -67,8 +70,13 @@ var Card2 = React.createClass({
         </CardActions>
       );
     }
-
+    var styles = {
+          popover: {
+                padding: 20,
+                  },
+          };
     return (
+      <div>
       <Card>
               <CardHeader
                 title={this.props.vendor}
@@ -77,14 +85,15 @@ var Card2 = React.createClass({
                 actAsExpander={false}
                 showExpandableButton={false}
                 avatar={this.props.vendorPhoto}
+
               />
-              <List onClick = {this.takeBet.bind(this, this.props.teamOne)}>
+              <List onClick = {this.handleTouchTap}>
 
                 <ListItem primaryText={this.props.teamOne} secondaryText={this.props.odds}
-                className="muidocs-checkbox-example" iconStyle={{ fill: '#FF9800'}}
+                className="muidocs-checkbox-example"
                 rightAvatar={<Avatar src={this.props.photoOneURL} />} />
               </List>
-              <List onClick = {this.takeBet.bind(this, this.props.teamTwo)}>
+              <List onClick = {this.handleTouchTap}>
                 <ListItem primaryText={this.props.teamTwo}
                 rightAvatar={<Avatar src={this.props.photoTwoURL} />} />
               </List>
@@ -94,9 +103,54 @@ var Card2 = React.createClass({
 
               {buttons}
             </Card>
+
+        <Popover
+          open={this.state.open}
+          anchorEl={this.state.anchorEl}
+          anchorOrigin={{horizontal: 'middle', vertical: 'center'}}
+          targetOrigin={{horizontal: 'middle', vertical: 'center'}}
+          animation={PopoverAnimationFromTop}
+          onRequestClose={this.handleRequestClose}>
+          <div style={styles.popover}>
+          <Card>
+                  <CardHeader
+                    title={this.props.vendor}
+                    subtitle={subtitleString}
+                    subtitleColor= {Colors.redA700}
+                    actAsExpander={false}
+                    showExpandableButton={false}
+                    avatar={this.props.vendorPhoto}
+
+                  />
+                  <List onClick = {this.takeBet.bind(this, this.props.teamOne)}>
+
+                    <ListItem primaryText={this.props.teamOne} secondaryText={this.props.odds}
+                    className="muidocs-checkbox-example"
+                    rightAvatar={<Avatar src={this.props.photoOneURL} />} />
+                  </List>
+                  <List onClick = {this.takeBet.bind(this, this.props.teamTwo)}>
+                    <ListItem primaryText={this.props.teamTwo}
+                    rightAvatar={<Avatar src={this.props.photoTwoURL} />} />
+                  </List>
+                  <CardText>
+                  Are you sure you want to to take this deal?!
+                  </CardText>
+                    <CardText>
+                    Time: {eventHour}   &nbsp;  &nbsp;  &nbsp;        Date: {eventDate}
+                  </CardText>
+
+                  {buttons}
+                </Card>
+          </div>
+        </Popover>
+
+
+            </div>
     )
   },
-
+  getInitialState: function() {
+    return {open: false};
+  },
   takeBet: function(chosenTeam, e) {
       console.log("AvailableBet Clicked");
       console.log("Chosen Team ", chosenTeam);
@@ -108,7 +162,19 @@ var Card2 = React.createClass({
       this.props.handleRemove(this.props.cardID, this.props.isCurrent);
   },
 
+  handleTouchTap: function(event) {
+    console.log("touch tapped");
+      this.setState({
+        open: true,
+        anchorEl: event.currentTarget,
+      });
+    },
 
+  handleRequestClose: function() {
+      this.setState({
+        open: false,
+      });
+    },
 
 });
 

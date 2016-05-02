@@ -42,7 +42,7 @@ var Profile = React.createClass({
     }.bind(this));
   },
   render: function() {
-    console.log("Yo", this.state);
+    console.log("Yo", this.state.profile.user);
 
     if(this.state.profile.user === undefined) {
       return <div> Logging in ...</div>
@@ -51,17 +51,24 @@ var Profile = React.createClass({
     }
     else {
 
+    var emailString = "Current Email: "+ this.state.profile.user.facebook.email;
+
     return (
     <div>
-    <p> My Profile Yo</p>
+    <p> My Chancellor Profile</p>
      <Card>
         <CardHeader
           title={this.state.profile.user.facebook.name}
-
+          avatar={this.state.profile.user.facebook.profilePictureURL}
         />
-        <Avatar src={this.state.profile.user.facebook.profilePictureURL} />
         <CardText>
-          This ends tomorrow!
+        {emailString}
+        </CardText>
+        <CardText>
+        Number of Current Deals: {this.state.profile.user.currentBets.length}
+        </CardText>
+        <CardText>
+          Thank you for choosing Chancellor!
         </CardText>
       </Card>
     </div>

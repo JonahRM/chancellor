@@ -26,7 +26,7 @@ body {
 
 
 .muidocs-checkbox-example {
-  background-color: #0000FF;
+  secondaryTextColor: #0000FF;
 }
 
 .dropbtn {
