@@ -1,7 +1,7 @@
 // app/routes.js
 var User = require('./models/user.js');
 var Bet = require('./models/bet.js');
-
+   
 module.exports = function(app, passport) {
 
 	// =====================================
