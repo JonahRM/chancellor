@@ -66,7 +66,7 @@ module.exports = function(app, passport) {
   app.get('/api/auth/facebook/callback',
       passport.authenticate('facebook', {
           successRedirect : '/#/',
-          failureRedirect : '/api/'
+          failureRedirect : '/api'
       }));
 
 
@@ -75,7 +75,7 @@ module.exports = function(app, passport) {
 	// =====================================
 	app.get('/api/logout', function(req, res) {
 		req.logout();
-		res.redirect('/api/');
+		res.redirect('/api');
 	});
 
 
@@ -223,5 +223,5 @@ function isLoggedIn(req, res, next) {
 		return next();
 
 	// if they aren't redirect them to the home page
-	res.redirect('/api/');
+	res.redirect('/api');
 }

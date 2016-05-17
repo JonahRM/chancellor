@@ -57,7 +57,7 @@ request("http://xml.pinnaclesports.com/pinnacleFeed.aspx", function(error, respo
 
   ]
   var companyProductArray = ["Grilled Cheese",
-   "Stack of Pancakes",
+   "Pancakes",
    "Burrito",
    "Slice of Pizza",
     "Bread Bowl",
@@ -93,7 +93,7 @@ request("http://xml.pinnaclesports.com/pinnacleFeed.aspx", function(error, respo
           "photoTwoURL": "https://lh6.googleusercontent.com/-o5XaOSH6Y98/VCz-nAZ1lFI/AAAAAAAAAUw/W7F3Dal49ig/w600-h600/2.png",
           "vendor": companyNameArray[random], "vendorPhoto":companyPhotoArray[random],
           "odds": homeSpread,
-          "percentage": Math.floor(Math.random() * 40.0),
+          "percentage": (Math.floor(Math.random() * 6.0) * 5) + 18.0,
           "product": companyProductArray[random],
           "eventTime": eventTime,
           "league": league,
